@@ -10,7 +10,7 @@ main.py
 post.json
 
 POSTするデータをjsonファイルにて管理。
-各jsonデータの"to"="~"にはYour user IDを記載。
+各jsonデータの"to"=""には送信者のIDを取得して代入される。
 
 ◯リッチメニューの作成
 
