@@ -34,12 +34,16 @@ def callback():
 
 @handler.add(MessageEvent)
 def handle_message(event):
+    #print(profile.user_id)
     if event.message.type == "text":
-        #print(event)
+        #print(event) 
         CH = 'https://api.line.me/v2/bot/message/push'
         f = open("post.json","r")
         json_data=json.load(f)
-        #print(json_data)
+        profile = line_bot_api.get_profile(event.source.user_id)
+        for i in range(1,7):
+            data="POST"+str(i)
+            json_data[data]["to"]=profile.user_id
         if event.message.text == "\u4eca\u9031\u306e\u304a\u3059\u3059\u3081":
             #今週のおすすめ
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='こちらが今週のおすすめです。'))

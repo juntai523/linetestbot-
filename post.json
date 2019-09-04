@@ -1,6 +1,6 @@
 {
 	"POST1":{
-		"to": "Ua272a8de9e6a18856a679f997c474c80",
+		"to": "",
 		"messages":[
 			{
 				"type": "flex",
@@ -57,7 +57,7 @@
 		]
 	},
 "POST2":{
-	"to": "Ua272a8de9e6a18856a679f997c474c80",
+	"to": "",
 	"messages": [
 		{
 			"type": "template",
@@ -77,7 +77,7 @@
 	]
 },
 "POST3":{
-	"to": "Ua272a8de9e6a18856a679f997c474c80",
+	"to": "",
 	"messages": [
 		{
 			"type": "flex",
@@ -141,7 +141,7 @@
 	]
 },
 "POST4":{
-	"to": "Ua272a8de9e6a18856a679f997c474c80",
+	"to": "",
 	"messages": [
 		{  
 			"type": "flex",
@@ -259,7 +259,7 @@
 	]
 		},
 		"POST5":{
-			"to": "Ua272a8de9e6a18856a679f997c474c80",
+			"to": "",
 			"messages": [
 				{"type": "template",
 					"altText": "this is a carousel template",
@@ -307,7 +307,7 @@
 			]
 		},
 		"POST6":{
-			"to": "Ua272a8de9e6a18856a679f997c474c80",
+			"to": "",
 			"messages":[
 				{"type": "flex",
 					"altText": "This is a Flex Message",
