@@ -34,46 +34,47 @@ def callback():
 
 @handler.add(MessageEvent)
 def handle_message(event):
-    #print(profile.user_id)
+    f = open("post.json","r")
+    json_data=json.load(f)
+    profile = line_bot_api.get_profile(event.source.user_id)
     if event.message.type == "text":
         #print(event) 
         CH = 'https://api.line.me/v2/bot/message/push'
-        f = open("post.json","r")
-        json_data=json.load(f)
-        profile = line_bot_api.get_profile(event.source.user_id)
-        for i in range(1,7):
-            data="POST"+str(i)
-            json_data[data]["to"]=profile.user_id
         if event.message.text == "\u4eca\u9031\u306e\u304a\u3059\u3059\u3081":
             #今週のおすすめ
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='こちらが今週のおすすめです。'))
             # 実行
-            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["POST1"]))
+            json_data["Recommended_thisweek"]["to"]=profile.user_id
+            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["Recommended_thisweek"]))
             print(REQ.status_code)
             # HTTPステータスが 200 だったら OK
             if REQ.status_code != 200:
                 print(REQ.text)
         elif event.message.text == "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba":
-            #カスタマイズをはじめる
-            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["POST2"]))
+            #カスタマイズ
+            json_data["customize"]["to"]=profile.user_id
+            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["customize"]))
             print(REQ.status_code)
             if REQ.status_code != 200:
                 print(REQ.text)
         elif event.message.text == "\u30ab\u30b9\u30bf\u30de\u30a4\u30ba\u3092\u306f\u3058\u3081\u308b":
-            #カスタマイズ
-            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["POST3"]))
+            #カスタマイズをはじめる
+            json_data["start_customize"]["to"]=profile.user_id
+            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["start_customize"]))
             print(REQ.status_code)
             if REQ.status_code != 200:
                 print(REQ.text)
         elif event.message.text == "\u4eca\u306e\u6c17\u5206\u3067\u63a2\u3059":
             #今の気分で探す
-            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["POST4"]))
+            json_data["Feeling_now"]["to"]=profile.user_id
+            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["Feeling_now"]))
             print(REQ.status_code)
             if REQ.status_code != 200:
                 print(REQ.text)
         elif event.message.text == "\u5b63\u7bc0\u306e\u304a\u3059\u3059\u3081":
             #季節のおすすめ
-            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["POST5"]))
+            json_data["Seasonal_recommendations"]["to"]=profile.user_id
+            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["Seasonal_recommendations"]))
             print(REQ.status_code)
             if REQ.status_code != 200:
                 print(REQ.text)
@@ -82,7 +83,8 @@ def handle_message(event):
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='How to order'))
         elif event.message.text == "\u30d4\u30c3\u30af\u30a2\u30c3\u30d7":
             #ピックアップ
-            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["POST6"]))
+            json_data["pick_up"]["to"]=profile.user_id
+            REQ = requests.post(CH, headers=HEADERS, data=json.dumps(json_data["pick_up"]))
             print(REQ.status_code)
             if REQ.status_code != 200:
                 print(REQ.text)
