@@ -5,20 +5,26 @@ from linebot import LineBotApi,WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent,TextMessage,TextSendMessage
 import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
+app=Flask(__name__)
+load_dotenv(join(dirname(__file__),".env"))
 #環境変数の取得
-YOUR_CHANNEL_ACCESS_TOKEN="8Tv0bjRrDqSB7dktEL8fNQBD0k6HQx/bL2A+s1nf3jUSyWoqAgnB5F6gTZ7MMyahWxHm/ttUx3up/jrwPgJQnGynoDkJBvQ/R0172tOaDgOrzsHgjocj2gQ1MncovR3cgWj7a8YRmOXucbOOzNeaTAdB04t89/1O/w1cDnyilFU="#ラインボットのアクセストークン
-YOUR_CHANNEL_SECRET="b5297119b48490ae322185b38605c56b"#ラインボットのChannel Secret
-line_bot_api=LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
-handler=WebhookHandler(YOUR_CHANNEL_SECRET)
+token=os.environ.get("YOUR_CHANNEL_ACCESS_TOKEN")
+secret=os.environ.get("YOUR_CHANNEL_SECRET")
+line_bot_api=LineBotApi(token)
+handler=WebhookHandler(secret)
 
 # HTTPヘッダを設定
 HEADERS = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + YOUR_CHANNEL_ACCESS_TOKEN,
+    'Authorization': 'Bearer ' + token,
 }
 
 app=Flask(__name__)
+load_dotenv(join(dirname(__file__),".env"))
+
 @app.route("/callback",methods=["POST"])
 def callback():
     signature=request.headers["X-Line-Signature"]
@@ -38,7 +44,6 @@ def handle_message(event):
     json_data=json.load(f)
     profile = line_bot_api.get_profile(event.source.user_id)
     if event.message.type == "text":
-        #print(event) 
         CH = 'https://api.line.me/v2/bot/message/push'
         if event.message.text == "\u4eca\u9031\u306e\u304a\u3059\u3059\u3081":
             #今週のおすすめ
